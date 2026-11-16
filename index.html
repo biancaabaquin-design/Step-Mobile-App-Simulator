@@ -1,0 +1,2293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Step Mobile App Simulator</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                 Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background: #cbd8e6;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* =========================================================
+   MOBILE PHONE
+========================================================= */
+
+.phone {
+    width: 375px;
+    height: 760px;
+    max-width: 100%;
+    background: #242238;
+    border-radius: 30px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 35px rgba(0,0,0,.30);
+}
+
+/* =========================================================
+   APP AREA
+========================================================= */
+
+.app {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #242238;
+    color: #fff;
+}
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.top-bar {
+    height: 52px;
+    min-height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+}
+
+.top-title {
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.top-avatar {
+    position: absolute;
+    right: 14px;
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    background: #353449;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10.5px;
+    color: #ddd;
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px 12px 90px;
+    scrollbar-width: thin;
+    scrollbar-color: #55506c transparent;
+}
+
+.content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.content::-webkit-scrollbar-thumb {
+    background: #55506c;
+    border-radius: 5px;
+}
+
+/* =========================================================
+   TAB SCREENS
+========================================================= */
+
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+}
+
+/* =========================================================
+   GENERAL TEXT
+========================================================= */
+
+.section-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 12px 4px 8px;
+}
+
+.small-label {
+    font-size: 11.5px;
+    color: #aaa8b8;
+}
+
+.muted {
+    color: #a7a4b5;
+}
+
+.pink {
+    color: #e95b9e;
+}
+
+.green {
+    color: #5fd68a;
+}
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.card {
+    background: #353449;
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 10px;
+}
+
+.card.dark {
+    background: #302f42;
+}
+
+.card-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.card-subtitle {
+    font-size: 11.5px;
+    color: #aaa8b8;
+    line-height: 1.4;
+}
+
+/* =========================================================
+   ROWS
+========================================================= */
+
+.menu-row {
+    min-height: 54px;
+    padding: 10px 5px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.menu-row:last-child {
+    border-bottom: none;
+}
+
+.menu-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #3b394d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #eee;
+    font-size: 13px;
+    flex-shrink: 0;
+}
+
+.menu-content {
+    flex: 1;
+}
+
+.menu-title {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.menu-description {
+    font-size: 11px;
+    color: #aaa8b8;
+    margin-top: 2px;
+    line-height: 1.35;
+}
+
+.chevron {
+    color: #b9b6c4;
+    font-size: 11px;
+}
+
+/* =========================================================
+   PROFILE (MATCHING PROFILE 1 & PROFILE 2 SCREENSHOTS)
+========================================================= */
+
+.profile-main-card {
+    background: #323045;
+    border-radius: 16px;
+    overflow: hidden;
+    margin: 6px 2px 18px;
+}
+
+.profile-header {
+    text-align: center;
+    padding: 22px 16px 20px;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+}
+
+.profile-avatar {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: #464459;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+    font-weight: 500;
+    color: #f4f2fa;
+}
+
+.profile-name {
+    margin-top: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.edit-button {
+    margin-top: 12px;
+    display: inline-block;
+    padding: 7px 14px;
+    border-radius: 14px;
+    background: #454358;
+    color: #f0eef7;
+    font-size: 11.5px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.progress-card {
+    padding: 15px 16px 16px;
+}
+
+.progress-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 11px;
+}
+
+.progress-bar-track {
+    width: 100%;
+    height: 8px;
+    border-radius: 99px;
+    background: #504e64;
+    overflow: hidden;
+    margin-bottom: 9px;
+}
+
+.progress-bar-fill {
+    width: 0%;
+    height: 100%;
+    border-radius: 99px;
+    background: #ee5b9e;
+}
+
+.progress-stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #dcd9e6;
+    margin-bottom: 16px;
+}
+
+.progress-step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.progress-icon {
+    width: 36px;
+    height: 36px;
+    background: #ffffff;
+    color: #242238;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    flex-shrink: 0;
+}
+
+.progress-text {
+    flex: 1;
+}
+
+.progress-text strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.progress-text span {
+    display: block;
+    font-size: 11.5px;
+    color: #aaa8b8;
+    margin-top: 2px;
+}
+
+/* PROFILE FLAT SECTIONS (LEARN & EARN MONEY) */
+
+.profile-section {
+    margin-top: 10px;
+}
+
+.profile-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 8px 2px 6px;
+}
+
+.profile-section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+}
+
+.show-less-link {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #e95b9e;
+    cursor: pointer;
+}
+
+.profile-flat-list {
+    margin: 0 -12px;
+}
+
+.profile-flat-row {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 14px 14px;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+    cursor: pointer;
+}
+
+.profile-flat-row.no-border {
+    border-bottom: none;
+}
+
+.profile-tile-svg {
+    width: 38px;
+    height: 38px;
+    border-radius: 9px;
+    flex-shrink: 0;
+    display: block;
+}
+
+.earn-pink-badge {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #e86aa7;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.earn-contacts-badge {
+    width: 38px;
+    height: 38px;
+    border-radius: 9px;
+    border: 1px solid #965787;
+    background: rgba(232, 106, 167, 0.06);
+    color: #d382b3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.profile-row-copy {
+    flex: 1;
+}
+
+.profile-row-title {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #f4f2fa;
+    line-height: 1.35;
+}
+
+.profile-row-title.regular {
+    font-weight: 400;
+    color: #eae7f3;
+}
+
+.profile-row-sub {
+    font-size: 11.5px;
+    color: #aaa8b8;
+    margin-top: 2px;
+}
+
+/* =========================================================
+   CREDIT HEALTH
+========================================================= */
+
+.credit-card {
+    background: #353449;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+.credit-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 3px;
+}
+
+.credit-subtitle {
+    font-size: 11.5px;
+    color: #aaa8b8;
+    margin-bottom: 15px;
+}
+
+.credit-option {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 11px 0;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+.credit-option:last-child {
+    border-bottom: none;
+}
+
+.credit-option-icon {
+    width: 32px;
+    height: 32px;
+    background: #eeeef1;
+    color: #343344;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+}
+
+.credit-option-text {
+    flex: 1;
+}
+
+.credit-option-text strong {
+    font-size: 13px;
+    display: block;
+}
+
+.credit-option-text span {
+    font-size: 11px;
+    color: #aaa8b8;
+    display: block;
+    margin-top: 2px;
+    line-height: 1.35;
+}
+
+/* CREDIT SCORE */
+
+.score-card {
+    background: #353449;
+    border-radius: 10px;
+    padding: 18px 10px 16px;
+    text-align: center;
+}
+
+.score-title {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.score-subtitle {
+    font-size: 11px;
+    color: #aaa8b8;
+    margin-top: 2px;
+}
+
+.score-gauge {
+    height: 105px;
+    margin: 12px auto 5px;
+    width: 210px;
+    border-radius: 210px 210px 0 0;
+    border-top: 18px solid #c15aa4;
+    border-left: 18px solid #8b69c5;
+    border-right: 18px solid #8587d5;
+    border-bottom: 0;
+    filter: blur(4px);
+    opacity: .8;
+}
+
+.score-button {
+    border: none;
+    background: #ee5b9e;
+    color: white;
+    border-radius: 18px;
+    padding: 10px 20px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* =========================================================
+   LINKED ACCOUNTS & MOVE MONEY (FLAT LIST LIKE SCREENSHOT)
+========================================================= */
+
+.link-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.link-box {
+    height: 132px;
+    border: 1.5px dashed #b95793;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #e6e4ee;
+    font-size: 11.5px;
+    font-weight: 500;
+    cursor: pointer;
+    gap: 10px;
+}
+
+.link-box-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #3a384d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f4f2fa;
+    font-size: 15px;
+}
+
+.money-divider {
+    height: 1px;
+    background: rgba(255,255,255,.08);
+    margin: 4px -12px 14px;
+}
+
+.money-group {
+    margin-bottom: 12px;
+}
+
+.money-heading {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 12px 2px 6px;
+    color: #ffffff;
+}
+
+.money-list {
+    margin: 0 -12px;
+}
+
+.money-row {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 14px 14px;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+    cursor: pointer;
+}
+
+.money-row.no-border {
+    border-bottom: none;
+}
+
+.money-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #3b394e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #f4f2fa;
+    flex-shrink: 0;
+}
+
+.gpay-pill {
+    width: 36px;
+    height: 22px;
+    border-radius: 11px;
+    background: #ffffff;
+    color: #242238;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    letter-spacing: -0.3px;
+}
+
+.money-info {
+    flex: 1;
+}
+
+.money-info strong {
+    display: block;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #f4f2fa;
+}
+
+.money-info span {
+    display: block;
+    font-size: 11.5px;
+    color: #aaa8b8;
+    margin-top: 2px;
+}
+
+.money-info span.green {
+    color: #5fd68a;
+}
+
+.money-row .chevron {
+    font-size: 13px;
+    color: #d0cedb;
+}
+
+/* =========================================================
+   NEW CARDS TAB DESIGN (EXACT STEP MARK + SCREENSHOT COLORS)
+========================================================= */
+
+.virtual-card {
+    height: 182px;
+    width: 90%;
+    margin: 6px auto 16px;
+    border-radius: 14px;
+    position: relative;
+    overflow: hidden;
+    padding: 16px 18px;
+    background:
+        radial-gradient(ellipse 75% 70% at 54% 38%, #8375c9 0%, #5a4f96 48%, #342d5e 85%, #2a244d 100%);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.step-logo {
+    position: relative;
+    z-index: 5;
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: -0.8px;
+    color: #141221;
+    line-height: 1;
+}
+
+.card-ribbon-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.virtual-label {
+    position: absolute;
+    z-index: 6;
+    left: 18px;
+    bottom: 43px;
+    font-size: 11px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.virtual-create {
+    position: absolute;
+    z-index: 6;
+    left: 18px;
+    bottom: 20px;
+    font-size: 15.5px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.2px;
+}
+
+.row-card {
+    min-height: 54px;
+    background: #333146;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.row-card .left {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #f4f2fa;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.row-card .right {
+    font-size: 12px;
+    color: #b5b2c4;
+}
+
+.info-dot {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1px solid #ee5b9e;
+    color: #ee5b9e;
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.row-card .chevron {
+    font-size: 18px;
+    margin-left: 8px;
+    color: #d8d6df;
+    font-weight: 300;
+}
+
+/* PROMO (TRANSPARENT CONTAINER LIKE SCREENSHOT) */
+
+.promo {
+    min-height: 112px;
+    border-radius: 10px;
+    background: transparent;
+    margin: 14px 0 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.promo-image {
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    width: 82px;
+    height: 82px;
+    object-fit: cover;
+    border-radius: 14px;
+}
+
+.promo-copy {
+    position: relative;
+    z-index: 2;
+    padding: 2px 26px 22px 98px;
+    width: 100%;
+}
+
+.promo-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 4px;
+}
+
+.promo-text {
+    font-size: 11.5px;
+    line-height: 1.38;
+    color: #b8b5c7;
+}
+
+.promo-close {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #474559;
+    font-size: 13px;
+    color: #c7c5d4;
+    z-index: 3;
+    cursor: pointer;
+}
+
+.dots {
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+    z-index: 3;
+}
+
+.dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #7c798f;
+}
+
+.dot.active {
+    background: #ee5b9e;
+}
+
+/* CARDS SECTIONS */
+
+.section {
+    margin-bottom: 14px;
+}
+
+.section h2 {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 12px 4px 8px;
+    color: #f5f3fa;
+}
+
+.action-row {
+    min-height: 62px;
+    background: #353449;
+    border-radius: 10px;
+    padding: 10px 11px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.action-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #3d3b4f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 13px;
+    color: #d7d4df;
+}
+
+.action-icon.pink {
+    color: #ee5b9e;
+}
+
+.action-copy {
+    flex: 1;
+    min-width: 0;
+}
+
+.action-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #f4f2fa;
+}
+
+.action-text {
+    font-size: 11px;
+    color: #aaa8b8;
+    margin-top: 3px;
+    line-height: 1.35;
+}
+
+.action-arrow {
+    font-size: 20px;
+    color: #aaa8b8;
+    flex-shrink: 0;
+}
+
+/* =========================================================
+   EDIT ACCOUNT
+========================================================= */
+
+.back-row {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14.5px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.edit-avatar-area {
+    text-align: center;
+    padding: 8px 0 12px;
+}
+
+.edit-avatar {
+    width: 66px;
+    height: 66px;
+    border-radius: 50%;
+    background: #454458;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    position: relative;
+}
+
+.camera-badge {
+    position: absolute;
+    right: -2px;
+    bottom: 1px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ee5b9e;
+    color: white;
+    font-size: 9px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-row {
+    padding: 11px 3px;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+}
+
+.input-label {
+    font-size: 11px;
+    color: #aaa8b8;
+    margin-bottom: 4px;
+}
+
+.input-value {
+    font-size: 13px;
+    color: #eee;
+}
+
+.input-value.action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* =========================================================
+   ACCOUNT SECURITY
+========================================================= */
+
+.security-title {
+    font-size: 13px;
+    font-weight: 700;
+    margin: 14px 3px 5px;
+}
+
+.security-note {
+    font-size: 11px;
+    color: #aaa8b8;
+    margin-bottom: 8px;
+    line-height: 1.35;
+}
+
+.verified {
+    color: #55d78a;
+    margin-left: 4px;
+}
+
+/* =========================================================
+   BOTTOM NAV
+========================================================= */
+
+.bottom-nav {
+    height: 67px;
+    min-height: 67px;
+    background: #211f33;
+    border-top: 1px solid rgba(255,255,255,.07);
+    display: flex;
+    align-items: stretch;
+    justify-content: space-around;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+}
+
+.nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    color: #8e8b9e;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.nav-item i {
+    font-size: 15px;
+}
+
+.nav-item.active {
+    color: #ee5b9e;
+}
+
+.nav-item:hover {
+    color: #ee5b9e;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-height: 800px) {
+    .phone {
+        height: 94vh;
+    }
+}
+
+@media (max-width: 430px) {
+
+    body {
+        padding: 0;
+    }
+
+    .phone {
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="phone">
+
+<div class="app">
+
+<!-- =====================================================
+     TOP BAR
+===================================================== -->
+
+<div class="top-bar">
+
+    <div class="top-title" id="pageTitle">Accounts</div>
+
+    <div class="top-avatar">
+        AN
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     SCROLLABLE CONTENT
+===================================================== -->
+
+<div class="content">
+
+
+<!-- =====================================================
+     ACCOUNTS
+===================================================== -->
+
+<section class="screen active" id="accounts">
+
+    <div class="section-title">Account</div>
+
+</section>
+
+
+<!-- =====================================================
+     CARDS
+===================================================== -->
+
+<section class="screen" id="cards">
+
+    <div class="virtual-card">
+        <div class="step-logo">step</div>
+
+        <!-- Exact Step Shape.png Graphic -->
+        <svg class="card-ribbon-svg" viewBox="0 0 320 182" preserveAspectRatio="xMidYMid meet">
+            <!-- Left Square: outer facet (#56558a) & inner fold (#3c3b68) -->
+            <polygon points="82,91 128,58 113,138" fill="#56558a" />
+            <polygon points="128,58 160,104 113,138" fill="#3c3b68" />
+
+            <!-- Right Square: inner fold (#3c3b68) & outer facet (#56558a) -->
+            <polygon points="160,104 206,71 191,151" fill="#3c3b68" />
+            <polygon points="206,71 238,117 191,151" fill="#56558a" />
+
+            <!-- Top Center Square: solid black (#050507) -->
+            <polygon points="174,25 206,71 160,104 128,58" fill="#050507" />
+        </svg>
+
+        <div class="virtual-label">Virtual Card Number</div>
+        <div class="virtual-create">Tap to create</div>
+    </div>
+
+    <div class="row-card">
+        <div class="left">Physical Card <span class="info-dot">i</span></div>
+        <div style="display:flex;align-items:center">
+            <span class="right">Tap to Design and Order</span>
+            <span class="chevron">›</span>
+        </div>
+    </div>
+
+    <div class="row-card">
+        <div class="left">Virtual Card <span class="info-dot">i</span></div>
+        <div style="display:flex;align-items:center">
+            <span class="right">Tap to create</span>
+            <span class="chevron">›</span>
+        </div>
+    </div>
+
+    <div class="promo">
+        <img class="promo-image" src="data:image/png;base64,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" alt="Step Black card promotion">
+        <div class="promo-copy">
+            <div class="promo-title">Upgrade to Step Black</div>
+            <div class="promo-text">Get up to 8% cashback,<br>5.00% on your savings and<br>level up to a metal card for<br>$49!</div>
+        </div>
+        <div class="promo-close">×</div>
+        <div class="dots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Card Benefits</h2>
+        <div class="action-row">
+            <div class="action-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+            <div class="action-copy">
+                <div class="action-title">View Rewards</div>
+                <div class="action-text">Earn points that you can redeem for cash<br>or gift cards!</div>
+            </div>
+            <div class="action-arrow">›</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Gift Cards</h2>
+        <div class="action-row">
+            <div class="action-icon pink"><i class="fa-solid fa-gift"></i></div>
+            <div class="action-copy">
+                <div class="action-title">Buy Gift Cards</div>
+            </div>
+            <div class="action-arrow">›</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Actions</h2>
+
+        <div class="action-row">
+            <div class="action-icon"><i class="fa-solid fa-wallet"></i></div>
+            <div class="action-copy">
+                <div class="action-title">Manage Online Merchants</div>
+                <div class="action-text">View and manage merchants you transact<br>with regularly.</div>
+            </div>
+            <div class="action-arrow">›</div>
+        </div>
+
+        <div class="action-row">
+            <div class="action-icon"><i class="fa-solid fa-ban"></i></div>
+            <div class="action-copy">
+                <div class="action-title">Unblock International Transactions</div>
+                <div class="action-text">Protect your money by blocking<br>unwanted purchases.</div>
+            </div>
+            <div class="action-arrow">›</div>
+        </div>
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     MOVE MONEY
+===================================================== -->
+
+<section class="screen" id="moveMoney">
+
+    <div class="money-heading">
+        Linked Accounts
+    </div>
+
+    <div class="link-grid">
+
+        <div class="link-box">
+            <div class="link-box-icon">
+                <i class="fa-solid fa-building-columns"></i>
+            </div>
+            Link a Bank Account
+        </div>
+
+        <div class="link-box">
+            <div class="link-box-icon">
+                <i class="fa-regular fa-credit-card"></i>
+            </div>
+            Link a Debit Card
+        </div>
+
+    </div>
+
+    <div class="money-divider"></div>
+
+    <div class="money-heading">
+        Recurring Payments
+    </div>
+
+    <div class="money-list">
+
+        <div class="money-row no-border">
+
+            <div class="money-icon">
+                <i class="fa-regular fa-calendar"></i>
+            </div>
+
+            <div class="money-info">
+                <strong>Add Recurring Payment</strong>
+                <span>with any amount and frequency</span>
+            </div>
+
+            <i class="fa-solid fa-chevron-right chevron"></i>
+
+        </div>
+
+    </div>
+
+
+    <div class="money-heading">
+        Add Money
+    </div>
+
+    <div class="money-list">
+
+        <div class="money-row">
+
+            <div class="money-icon">
+                <i class="fa-regular fa-address-card"></i>
+            </div>
+
+            <div class="money-info">
+                <strong>Direct Deposit</strong>
+                <span class="green">Recommended · Get Step Black for free</span>
+            </div>
+
+            <i class="fa-solid fa-chevron-right chevron"></i>
+
+        </div>
+
+
+        <div class="money-row">
+
+            <div class="money-icon">
+                <i class="fa-solid fa-rotate"></i>
+            </div>
+
+            <div class="money-info">
+                <strong>Auto Reload your Account</strong>
+            </div>
+
+            <i class="fa-solid fa-chevron-right chevron"></i>
+
+        </div>
+
+
+        <div class="money-row">
+
+            <div class="gpay-pill">G Pay</div>
+
+            <div class="money-info">
+                <strong>Google Pay</strong>
+                <span>Instant transfer · Debit card only</span>
+            </div>
+
+            <i class="fa-solid fa-chevron-right chevron"></i>
+
+        </div>
+
+    </div>
+
+
+    <div class="money-group">
+
+        <div class="money-heading">
+            Move Money
+        </div>
+
+        <div class="money-list">
+
+            <div class="money-row">
+
+                <div class="money-icon">
+                    <i class="fa-solid fa-building-columns"></i>
+                </div>
+
+                <div class="money-info">
+                    <strong>Directly from your Bank Account</strong>
+                    <span>Usually 1 business day · $25,000 daily</span>
+                </div>
+
+                <i class="fa-solid fa-chevron-right chevron"></i>
+
+            </div>
+
+
+            <div class="money-row">
+
+                <div class="money-icon">
+                    <i class="fa-solid fa-money-bill"></i>
+                </div>
+
+                <div class="money-info">
+                    <strong>Deposit Cash</strong>
+                    <span>$3.95 per deposit</span>
+                </div>
+
+                <i class="fa-solid fa-chevron-right chevron"></i>
+
+            </div>
+
+
+            <div class="money-row">
+
+                <div class="money-icon">
+                    <i class="fa-solid fa-money-check"></i>
+                </div>
+
+                <div class="money-info">
+                    <strong>Deposit Check</strong>
+                </div>
+
+                <i class="fa-solid fa-chevron-right chevron"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="money-group">
+
+        <div class="money-heading">
+            Transfer
+        </div>
+
+        <div class="money-list">
+
+            <div class="money-row">
+
+                <div class="money-icon">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </div>
+
+                <div class="money-info">
+                    <strong>Send Money</strong>
+                </div>
+
+                <i class="fa-solid fa-chevron-right chevron"></i>
+
+            </div>
+
+
+            <div class="money-row">
+
+                <div class="money-icon">
+                    <i class="fa-solid fa-comment-dollar"></i>
+                </div>
+
+                <div class="money-info">
+                    <strong>Request Money</strong>
+                </div>
+
+                <i class="fa-solid fa-chevron-right chevron"></i>
+
+            </div>
+
+
+            <div class="money-row">
+
+                <div class="money-icon">
+                    <i class="fa-solid fa-qrcode"></i>
+                </div>
+
+                <div class="money-info">
+                    <strong>Share my Pay Me Page</strong>
+                </div>
+
+                <i class="fa-solid fa-chevron-right chevron"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="money-group">
+
+        <div class="money-heading">
+            Withdraw Money
+        </div>
+
+        <div class="money-list">
+
+            <div class="money-row">
+
+                <div class="money-icon">
+                    <i class="fa-solid fa-wallet"></i>
+                </div>
+
+                <div class="money-info">
+                    <strong>Withdraw Money</strong>
+                </div>
+
+                <i class="fa-solid fa-chevron-right chevron"></i>
+
+            </div>
+
+
+            <div class="money-row">
+
+                <div class="money-icon">
+                    <i class="fa-solid fa-money-bill-wave"></i>
+                </div>
+
+                <div class="money-info">
+                    <strong>ATM</strong>
+                </div>
+
+                <i class="fa-solid fa-chevron-right chevron"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+<!-- =====================================================
+     CREDIT HEALTH
+===================================================== -->
+
+<section class="screen" id="creditHealth">
+
+    <div class="score-card">
+
+        <div class="score-title">
+            Your Credit Score
+        </div>
+
+        <div class="score-subtitle">
+            TransUnion Vantage Score 4.0
+        </div>
+
+        <div class="score-gauge"></div>
+
+        <button class="score-button">
+            Start Tracking My Credit Score
+        </button>
+
+    </div>
+
+<section style="margin-bottom: 12px;">
+ 
+</section>
+<div class="credit-card">
+
+        <div class="credit-title">
+            Build your credit history
+        </div>
+
+        <div class="credit-subtitle">
+            Get started with your Step account.
+        </div>
+
+
+        <div class="credit-option">
+
+            <div class="credit-option-icon">
+                <i class="fa-solid fa-hand"></i>
+            </div>
+
+            <div class="credit-option-text">
+                <strong>Choose your plan</strong>
+                <span>Get a virtual card right away.</span>
+            </div>
+
+            <i class="fa-solid fa-chevron-right chevron"></i>
+
+        </div>
+
+
+        <div class="credit-option">
+
+            <div class="credit-option-icon">
+                <i class="fa-solid fa-money-bill"></i>
+            </div>
+
+            <div class="credit-option-text">
+                <strong>Fund your account</strong>
+                <span>
+                    Deposit cash or checks, receive money, or link another account.
+                </span>
+            </div>
+
+            <i class="fa-solid fa-chevron-right chevron"></i>
+
+        </div>
+
+
+        <div class="credit-option">
+
+            <div class="credit-option-icon">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+
+            <div class="credit-option-text">
+                <strong>Start using your card</strong>
+                <span>
+                    Make your first purchase to start your history of credit with Step.
+                </span>
+            </div>
+
+            <i class="fa-solid fa-chevron-right chevron"></i>
+
+        </div>
+
+    </div>
+
+
+    <div class="credit-card">
+
+        <div class="credit-title">
+            How it works
+        </div>
+
+        <div class="credit-subtitle" style="line-height:1.5;">
+
+            Every month that you use your Step Card,
+            you build your credit history. With Smart Pay,
+            your purchases are automatically paid off every month
+            using the money in your account.
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+<!-- =====================================================
+     PROFILE
+===================================================== -->
+
+<section class="screen" id="profile">
+
+    <div class="profile-main-card">
+
+        <div class="profile-header">
+
+            <div class="profile-avatar">
+                AN
+            </div>
+
+            <div class="profile-name">
+                Amber Nevada
+            </div>
+
+            <div class="edit-button" onclick="openEditAccount()">
+                Edit Account Information
+            </div>
+
+        </div>
+
+
+        <div class="progress-card">
+
+            <div class="progress-title">
+                Account Progress
+            </div>
+
+            <div class="progress-bar-track">
+                <div class="progress-bar-fill"></div>
+            </div>
+
+            <div class="progress-stats">
+                <span>0 of 4</span>
+                <span>0%</span>
+            </div>
+
+            <div class="progress-step">
+
+                <div class="progress-icon">
+                    <i class="fa-solid fa-hand-pointer"></i>
+                </div>
+
+                <div class="progress-text">
+                    <strong>Next Step:</strong>
+                    <span>Choose your plan</span>
+                </div>
+
+                <i class="fa-solid fa-chevron-right chevron"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="profile-section">
+
+        <div class="profile-section-header">
+            <div class="profile-section-title">
+                Learn
+            </div>
+        </div>
+
+        <div class="profile-flat-list">
+
+            <div class="profile-flat-row">
+
+                <!-- Daily Trivia Tile SVG (Blue/Pink Neon Gradient with Question Mark) -->
+                <svg class="profile-tile-svg" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="triviaBg" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#1b3c9e" />
+                            <stop offset="50%" stop-color="#8c2496" />
+                            <stop offset="100%" stop-color="#f23c8a" />
+                        </linearGradient>
+                        <linearGradient id="triviaMark" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#8ce8ff" />
+                            <stop offset="100%" stop-color="#5d7cff" />
+                        </linearGradient>
+                    </defs>
+                    <rect width="40" height="40" rx="9" fill="url(#triviaBg)" />
+                    <circle cx="29" cy="11" r="10" fill="#ff5ca8" opacity="0.55" />
+                    <path d="M15.2 15.2c0-2.9 2.2-5 5.3-5 3.1 0 5.2 1.9 5.2 4.6 0 2.1-1.2 3.4-3.1 4.4-1.2.7-1.6 1.2-1.6 2.3v.6h-3.1v-.8c0-1.7.7-2.8 2.4-3.7 1.3-.7 2-1.4 2-2.6 0-1.2-.9-2-2.2-2-1.4 0-2.2.8-2.3 2.2h-2.6zm4.2 9.1c1.1 0 2 .8 2 1.9 0 1.1-.9 1.9-2 1.9-1.1 0-2-.8-2-1.9 0-1.1.9-1.9 2-1.9z" fill="url(#triviaMark)" />
+                </svg>
+
+                <div class="profile-row-copy">
+
+                    <div class="profile-row-title">
+                        Daily Trivia
+                    </div>
+
+                    <div class="profile-row-sub">
+                        A new question is ready!
+                    </div>
+
+                </div>
+
+                <span class="pink" style="font-size:11.5px; font-weight:600;">
+                    Streak: 0
+                </span>
+
+            </div>
+
+
+            <div class="profile-flat-row no-border">
+
+                <!-- Watch and Learn Tile SVG (Blue/Magenta Angled Display Screen) -->
+                <svg class="profile-tile-svg" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="watchBg" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#17327a" />
+                            <stop offset="55%" stop-color="#4e40b5" />
+                            <stop offset="100%" stop-color="#a2439e" />
+                        </linearGradient>
+                        <linearGradient id="screenFace" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#e879b9" />
+                            <stop offset="50%" stop-color="#8b6fe8" />
+                            <stop offset="100%" stop-color="#3558c9" />
+                        </linearGradient>
+                    </defs>
+                    <rect width="40" height="40" rx="9" fill="url(#watchBg)" />
+                    <!-- Angled Screen -->
+                    <polygon points="10,13 30,10 30,27 10,25" rx="2" fill="url(#screenFace)" stroke="#7cc7ff" stroke-width="0.9" />
+                    <!-- Subtle Stand -->
+                    <polygon points="17,26 23,26.5 24,30 16,29.5" fill="#7094ff" opacity="0.85" />
+                    <rect x="13" y="29.5" width="14" height="1.8" rx="0.9" fill="#9bd0ff" opacity="0.85" />
+                </svg>
+
+                <div class="profile-row-copy">
+
+                    <div class="profile-row-title">
+                        Watch and Learn
+                    </div>
+
+                    <div class="profile-row-sub">
+                        Learn about managing your finances.
+                    </div>
+
+                </div>
+
+                <i class="fa-solid fa-chevron-right chevron"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="profile-section">
+
+        <div class="profile-section-header">
+            <div class="profile-section-title">
+                Earn Money
+            </div>
+            <span class="show-less-link">Show Less</span>
+        </div>
+
+        <div class="profile-flat-list">
+
+            <div class="profile-flat-row">
+
+                <div class="earn-pink-badge">
+                    <i class="fa-solid fa-user-plus"></i>
+                </div>
+
+                <div class="profile-row-copy">
+
+                    <div class="profile-row-title regular">
+                        Invite friends, get $50 when they receive a direct deposit!
+                    </div>
+
+                </div>
+
+                <i class="fa-solid fa-chevron-right chevron"></i>
+
+            </div>
+
+
+            <div class="profile-flat-row">
+
+                <div class="earn-contacts-badge">
+                    <i class="fa-regular fa-address-book"></i>
+                </div>
+
+                <div class="profile-row-copy">
+
+                    <div class="profile-row-title regular">
+                        Grant us access to your contacts to see your friends and family.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     EDIT ACCOUNT
+===================================================== -->
+
+<section class="screen" id="editAccount">
+
+    <div class="back-row" onclick="goToTab('profile')">
+
+        <i class="fa-solid fa-chevron-left"></i>
+
+        <span>Edit Account</span>
+
+    </div>
+
+
+    <div class="edit-avatar-area">
+
+        <div class="edit-avatar">
+
+            AN
+
+            <div class="camera-badge">
+                <i class="fa-solid fa-camera"></i>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="security-title">
+        Personal Information
+    </div>
+
+
+    <div class="input-row">
+
+        <div class="input-label">
+            Full Name
+        </div>
+
+        <div class="input-value">
+            Amber Nevada
+        </div>
+
+    </div>
+
+
+    <div class="input-row">
+
+        <div class="input-label">
+            Username
+        </div>
+
+        <div class="input-value action">
+
+            <span>$EnterUsername</span>
+
+            <i class="fa-solid fa-chevron-right chevron"></i>
+
+        </div>
+
+    </div>
+
+
+    <div class="input-row">
+
+        <div class="input-label">
+            Date of birth
+        </div>
+
+        <div class="input-value">
+            October 1st, 1998
+        </div>
+
+    </div>
+
+
+    <div class="input-row">
+
+        <div class="input-label">
+            Address (Billing & Shipping)
+        </div>
+
+        <div class="input-value">
+            123 Any Street, Apartment #123
+        </div>
+
+    </div>
+
+
+    <!-- ACCOUNT DETAILS -->
+
+    <div class="security-title">
+        Details
+    </div>
+
+
+    <div class="input-row">
+
+        <div class="input-label">
+            Account & Routing Number
+        </div>
+
+        <div class="input-value action">
+
+            <span>Ending with ••••7729</span>
+
+            <i class="fa-solid fa-chevron-right chevron"></i>
+
+        </div>
+
+    </div>
+
+
+    <div class="input-row">
+
+        <div class="input-label">
+            Phone
+        </div>
+
+        <div class="input-value">
+            (328) 555-0007
+        </div>
+
+    </div>
+
+
+    <div class="input-row">
+
+        <div class="input-label">
+            Email
+        </div>
+
+        <div class="input-value">
+            amber+080124@step.com
+        </div>
+
+    </div>
+
+
+    <div class="input-row">
+
+        <div class="input-label">
+            Monthly Statements
+        </div>
+
+        <div class="input-value action">
+
+            <span></span>
+
+            <i class="fa-solid fa-chevron-right chevron"></i>
+
+        </div>
+
+    </div>
+
+
+    <div class="input-row">
+
+        <div class="input-label">
+            Account Limits
+        </div>
+
+        <div class="input-value action">
+
+            <span></span>
+
+            <i class="fa-solid fa-chevron-right chevron"></i>
+
+        </div>
+
+    </div>
+
+
+    <!-- OTHER -->
+
+    <div class="security-title">
+        Other
+    </div>
+
+
+    <div class="input-row">
+
+        <div class="input-value action">
+
+            <span>App Settings</span>
+
+            <i class="fa-solid fa-chevron-right chevron"></i>
+
+        </div>
+
+    </div>
+
+
+    <!-- ACCOUNT SECURITY -->
+
+    <div class="security-title">
+        Account Security
+    </div>
+
+    <div class="security-note">
+        You must have two verified ways to recover your account.
+    </div>
+
+
+    <div class="input-row">
+
+        <div class="input-label">
+            Phone
+        </div>
+
+        <div class="input-value action">
+
+            <span>
+                (328) 555-0007
+                <span class="verified">●</span>
+            </span>
+
+            <i class="fa-solid fa-chevron-right chevron"></i>
+
+        </div>
+
+    </div>
+
+
+    <div class="input-row">
+
+        <div class="input-label">
+            Email
+        </div>
+
+        <div class="input-value action">
+
+            <span>
+                amber+080124@step.com
+                <span class="verified">●</span>
+            </span>
+
+            <i class="fa-solid fa-chevron-right chevron"></i>
+
+        </div>
+
+    </div>
+
+
+    <div class="input-row">
+
+        <div class="input-value action">
+
+            <span>
+                <i class="fa-brands fa-google"></i>
+                  Sign in with Google
+            </span>
+
+            <i class="fa-solid fa-chevron-right chevron"></i>
+
+        </div>
+
+    </div>
+
+
+    <div class="input-row">
+
+        <div class="input-value action">
+
+            <span>
+                <i class="fa-brands fa-apple"></i>
+                  Sign in with Apple
+            </span>
+
+            <i class="fa-solid fa-chevron-right chevron"></i>
+
+        </div>
+
+    </div>
+
+
+    <div class="input-row">
+
+        <div class="input-value action">
+
+            <span>
+                <i class="fa-solid fa-key"></i>
+                  Passkey Settings
+            </span>
+
+            <i class="fa-solid fa-chevron-right chevron"></i>
+
+        </div>
+
+    </div>
+
+
+    <div class="security-title">
+        Account Management
+    </div>
+
+
+    <div class="input-row">
+
+        <div class="input-value action">
+
+            <span>Log Out</span>
+
+            <i class="fa-solid fa-chevron-right chevron"></i>
+
+        </div>
+
+    </div>
+
+
+    <div class="input-row">
+
+        <div class="input-value action">
+
+            <span>Close Account</span>
+
+            <i class="fa-solid fa-chevron-right chevron"></i>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</div>
+
+
+<!-- =====================================================
+     BOTTOM NAVIGATION
+===================================================== -->
+
+<div class="bottom-nav">
+
+    <div class="nav-item active"
+         onclick="goToTab('accounts')">
+
+        <i class="fa-solid fa-list"></i>
+        <span>Accounts</span>
+
+    </div>
+
+
+    <div class="nav-item"
+         onclick="goToTab('cards')">
+
+        <i class="fa-regular fa-credit-card"></i>
+        <span>Cards</span>
+
+    </div>
+
+
+    <div class="nav-item"
+         onclick="goToTab('moveMoney')">
+
+        <i class="fa-solid fa-circle-dollar-to-slot"></i>
+        <span>Move Money</span>
+
+    </div>
+
+
+    <div class="nav-item"
+         onclick="goToTab('creditHealth')">
+
+        <i class="fa-regular fa-heart"></i>
+        <span>Credit Health</span>
+
+    </div>
+
+
+    <div class="nav-item"
+         onclick="goToTab('profile')">
+
+        <i class="fa-regular fa-user"></i>
+        <span>Profile</span>
+
+    </div>
+
+</div>
+
+</div>
+</div>
+
+
+<script>
+
+/* =========================================================
+   TAB NAVIGATION
+========================================================= */
+
+function goToTab(tabName) {
+
+    document.querySelectorAll(".screen").forEach(screen => {
+        screen.classList.remove("active");
+    });
+
+    document.getElementById(tabName).classList.add("active");
+
+
+    document.querySelectorAll(".nav-item").forEach(item => {
+        item.classList.remove("active");
+    });
+
+
+    const navItems = document.querySelectorAll(".nav-item");
+
+    if (tabName === "accounts") {
+        navItems[0].classList.add("active");
+        document.getElementById("pageTitle").innerText = "Accounts";
+    }
+
+    else if (tabName === "cards") {
+        navItems[1].classList.add("active");
+        document.getElementById("pageTitle").innerText = "Amber's Cards";
+    }
+
+    else if (tabName === "moveMoney") {
+        navItems[2].classList.add("active");
+        document.getElementById("pageTitle").innerText = "Move Money";
+    }
+
+    else if (tabName === "creditHealth") {
+        navItems[3].classList.add("active");
+        document.getElementById("pageTitle").innerText = "Credit Health";
+    }
+
+    else if (tabName === "profile") {
+        navItems[4].classList.add("active");
+        document.getElementById("pageTitle").innerText = "Profile";
+    }
+
+
+    document.querySelector(".content").scrollTop = 0;
+}
+
+
+/* =========================================================
+   EDIT ACCOUNT SCREEN
+========================================================= */
+
+function openEditAccount() {
+
+    document.querySelectorAll(".screen").forEach(screen => {
+        screen.classList.remove("active");
+    });
+
+    document.getElementById("editAccount").classList.add("active");
+
+    document.getElementById("pageTitle").innerText = "Edit Account";
+
+    document.querySelectorAll(".nav-item").forEach(item => {
+        item.classList.remove("active");
+    });
+
+    document.querySelector(".content").scrollTop = 0;
+}
+
+</script>
+
+</body>
+</html>
